@@ -1,0 +1,32 @@
+mastermind.rb:
+-responsible for starting the game
+-makes a new instance of game.rb, calls start method
+-prints out all previous guesses w/ results every turn (thru record_keeper)
+
+game.rb
+-calls methods on other classes
+-
+
+sequence_bot
+-generates solution sequence, based on difficulty level
+-
+
+sequence_judge
+-checks input against solution sequence
+-makes sure input conforms to difficulty level
+-generates number of colors correct and/or in the correct position
+
+record_keeper
+-keeps record of previous guesses
+
+
+instructions
+-prints instructions
+
+
+
+NOTES
+Asterisks represent pins in real game
+Asterisks 
+gem: terminal-table
+gem: rainbow
