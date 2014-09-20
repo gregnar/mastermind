@@ -1,19 +1,25 @@
-require "rainbow"  # => true
+require "rainbow"
 
+module Colors
 
-color_key = {"Y" => Rainbow("Y").yellow,  # => "Y"
-            "R" => Rainbow("R").red,      # => "R"
-            "G" => Rainbow("G").green,    # => "G"
-            "W" => Rainbow("W").white,    # => "W"
-            "P" => Rainbow("P").magenta,  # => "P"
-            "B" => Rainbow("B").blue      # => "B"
-            }                             # => {"Y"=>"Y", "R"=>"R", "G"=>"G", "W"=>"W", "P"=>"P", "B"=>"B"}
+  def self.make_pretty(sequence)
 
+    color_key = {"Y" => Rainbow("Y").yellow.bright,
+                "R" => Rainbow("R").red.bright,
+                "G" => Rainbow("G").green.bright,
+                "W" => Rainbow("W").white.bright,
+                "P" => Rainbow("P").magenta.bright,
+                "B" => Rainbow("B").blue.bright
+                }
 
-string = "GBYRWP"  # => "GBYRWP"
+    sequence.chars.map! do |letter|
+      color_key[letter]
+    end
 
-new_string = string.chars.map do |letter|  # => ["G", "B", "Y", "R", "W", "P"]
-  color_key[letter]                        # => "G", "B", "Y", "R", "W", "P"
-end                                        # => ["G", "B", "Y", "R", "W", "P"]
+  end
+end
 
-puts new_string.join("||")  # => "GBYRWP"
+string = "WPBGR"
+puts string
+string = Colors.make_pretty(string).join(" - ")
+puts string

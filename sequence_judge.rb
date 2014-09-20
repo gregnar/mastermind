@@ -1,4 +1,5 @@
 require_relative "sequence_generator"
+require 'rainbow'
 
 class SequenceJudge
 
