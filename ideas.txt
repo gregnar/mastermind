@@ -18,7 +18,8 @@ sequence_judge
 
 record_keeper
 -keeps record of previous guesses
-
+-keeps track of current number of guesses
+-records time taken to solve problem
 
 instructions
 -prints instructions
@@ -27,6 +28,6 @@ instructions
 
 NOTES
 Asterisks represent pins in real game
-Asterisks 
+Asterisks
 gem: terminal-table
 gem: rainbow
