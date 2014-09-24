@@ -50,9 +50,11 @@ class MasterMind
 
   def play_again
     @printer.play_again
-    @command_again = gets.strip
-    until exit?
+    until exit_again?
+      @command_again = gets.strip
       case
+      when exit_again?
+        @printer.quit
       when play_again?
         start
         break
@@ -74,9 +76,6 @@ class MasterMind
     @command == "a" || @command == "advanced"
   end
 
-  def you_win
-  end
-
   def instructions?
     @command == "i" || @command == "instructions"
   end
@@ -91,5 +90,9 @@ class MasterMind
 
   def exit?
     @command == "q" || @command == "quit"
+  end
+
+  def exit_again?
+    @command_again == "q" || @command_again =="quit"
   end
 end
