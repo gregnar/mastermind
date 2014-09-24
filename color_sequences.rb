@@ -3,7 +3,6 @@ require "rainbow"
 module Colors
 
   def self.make_pretty(sequence)
-
     color_key = {"Y" => Rainbow("Y").yellow.bright,
                 "R" => Rainbow("R").red.bright,
                 "G" => Rainbow("G").green.bright,
@@ -12,14 +11,9 @@ module Colors
                 "B" => Rainbow("B").blue.bright
                 }
 
-    sequence.chars.map! do |letter|
+    new_sequence = sequence.chars.map! do |letter|
       color_key[letter]
     end
-
+    new_sequence.join("-")
   end
 end
-
-string = "WPBGR"
-puts string
-string = Colors.make_pretty(string).join(" - ")
-puts string

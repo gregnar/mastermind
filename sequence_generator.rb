@@ -17,10 +17,10 @@ class SequenceGenerator
   end
 
   def generator_bot(sequence_length)
-      sequence_length.times do
-        @solution_sequence << @possible_colors.sample
-      end
-      @solution_sequence
+    sequence_length.times do
+      @solution_sequence << @possible_colors.sample
+    end
+    @solution_sequence
   end
 
   def beginner
@@ -37,8 +37,3 @@ class SequenceGenerator
     generator_bot(8)
   end
 end
-
-x = SequenceGenerator.new("advanced")
-x.generate_sequence
-x.solution_sequence
-x.solution_sequence

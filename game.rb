@@ -1,18 +1,79 @@
-require_relative 'instructions'
+require_relative 'sequence_generator'
+require_relative 'checker'
+require_relative 'printer'
+require 'pry'
 
-class MasterMind
+class Game
 
-  def start
-    puts "Welcome to MASTERMIND"
-    puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
-    case gets.chomp
-    when ("p" || "play") then ask_difficulty
-    when ("i" || "instructions") then Instructions.print_instructions
-    when ("q" or "quit") then exit
+  attr_reader :difficulty
+
+  def initialize(difficulty)
+    @difficulty = difficulty
+    @printer = Printer.new
+  end
+
+  def play
+    generator = SequenceGenerator.new(difficulty)
+    generator.generate_sequence
+    @solution = generator.solution_sequence
+    @printer.initiate_game(difficulty)
+    play_loop
+  end
+
+  def play_loop
+    @checker = GuessChecker.new(@solution)
+    @printer.start_guessing
+    @start_time = Time.now
+    until exit? || win?
+      @guess = gets.strip.upcase
+      case
+      when win?
+        @printer.you_win
+        @end_time = Time.now
+        @printer.time_taken(@start_time, @end_time)
+      when exit?
+        @printer.quit
+      when wrong_length?
+        @printer.invalid_input
+      when right_length?
+        @checker.check_guess(@guess)
+        @printer.guess_feedback( @guess, @checker.correct_elements, @checker.correct_position)
+        @checker.reset
+      end
     end
   end
 
-  def ask_difficulty
+
+  def quit?
+    @command == "q" || @command == "quit"
   end
 
+
+  def beginner?
+    @difficulty == "beginner"
+  end
+
+  def intermediate?
+    @difficulty == "intermediate"
+  end
+
+  def advanced?
+    @difficulty == "advanced"
+  end
+
+  def wrong_length?
+    @guess.length != @solution.length
+  end
+
+  def right_length?
+    @guess.length == @solution.length
+  end
+
+  def win?
+    @guess == @solution
+  end
+
+  def exit?
+    @guess == "q" || @guess == "quit"
+  end
 end
