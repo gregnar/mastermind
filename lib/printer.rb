@@ -21,16 +21,17 @@ class Printer
 
   def initiate_game(difficulty)
     @colors = ["(r)ed", "(g)reen", "(b)lue", "(y)ellow"]
+    @elements = ""
     case difficulty
     when "beginner"
-      @elements = "four"
+      elements = "four"
     when "intermediate"
-      @elements = "six"
-      @colors << "(w)hite"
+      elements = "six"
+      colors << "(w)hite"
     when "advanced"
-      @elements = "eight"
-      @colors << "(w)hite"
-      @colors << "(p)urple"
+      elements = "eight"
+      colors << "(w)hite"
+      colors << "(p)urple"
     end
     initiate_message(difficulty, elements, colors)
   end
@@ -41,8 +42,6 @@ class Printer
           "Use (q)uit at any time to end the game."
     puts message
   end
-
-
 
   def start_guessing
     puts Rainbow("Start guessing").green.bright

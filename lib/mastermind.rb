@@ -3,12 +3,14 @@ require_relative 'game'
 
 class MasterMind
 
+  attr_reader :printer, :command
+
   def initialize
     @printer = Printer.new
   end
 
   def start
-    @printer.welcome_message
+    printer.welcome_message
     until exit? || play?
       @command = gets.strip
       case
@@ -16,18 +18,19 @@ class MasterMind
         set_difficulty
         break
       when instructions?
-        @printer.instructions
+        printer.instructions
       when exit?
-        @printer.quit
+        printer.quit
+        exit
       else
-        @printer.invalid_input
+        printer.invalid_input
       end
     end
   end
 
 
   def set_difficulty
-    @printer.ask_difficulty
+    printer.ask_difficulty
     until exit?
       @command = gets.strip
       case
@@ -41,58 +44,51 @@ class MasterMind
         Game.new("advanced").play
         break
       when exit?
-        @printer.quit
+        printer.quit
       else
-        @printer.invalid_input
+        printer.invalid_input
       end
     end
   end
 
   def play_again
-    @printer.play_again
-    until exit_again?
-      @command_again = gets.strip
+    printer.play_again
+    until exit?
+      @command = gets.strip
       case
-      when exit_again?
-        @printer.quit
-      when play_again?
+      when exit?
+        printer.quit
+      when play?
         start
         break
       else
-        @printer.invalid_input
+        printer.invalid_input
       end
     end
   end
 
   def beginner?
-    @command == "b" || @command == "beginner"
+    command == "b" || command == "beginner"
   end
 
   def intermediate?
-    @command == "i" || @command == "intermediate"
+    command == "i" || command == "intermediate"
   end
 
   def advanced?
-    @command == "a" || @command == "advanced"
+    command == "a" || command == "advanced"
   end
 
   def instructions?
-    @command == "i" || @command == "instructions"
+    command == "i" || command == "instructions"
   end
 
   def play?
-    @command == "p" || @command == "play"
-  end
-
-  def play_again?
-    @command_again == "p" || @command_again == "play again"
+    command == "p" || command == "play"
   end
 
   def exit?
-    @command == "q" || @command == "quit"
+    command == "q" || command == "quit"
   end
 
-  def exit_again?
-    @command_again == "q" || @command_again =="quit"
-  end
 end

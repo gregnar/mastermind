@@ -1,9 +1,11 @@
 class GuessChecker
-
   attr_reader :solution_sequence,
               :guess,
               :correct_elements,
-              :correct_position
+              :correct_position,
+              :correct_elements_counter,
+              :correct_position_counter
+
 
   def initialize(solution_sequence)
     @solution_sequence = solution_sequence
@@ -28,7 +30,7 @@ class GuessChecker
         duplicate_solution.delete_at(duplicate_solution.index(color))
       end
     end
-    @correct_elements_counter
+    correct_elements_counter
   end
 
 
@@ -37,12 +39,11 @@ class GuessChecker
     guess_sequence.each_with_index do |color, i|
       @correct_position_counter += 1 if color == @solution_array[i]
     end
-    @correct_position_counter
+    correct_position_counter
   end
 
   def reset
     @correct_elements_counter = 0
     @correct_position_counter = 0
   end
-
 end

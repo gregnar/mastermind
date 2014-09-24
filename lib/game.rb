@@ -5,7 +5,7 @@ require 'pry'
 
 class Game
 
-  attr_reader :difficulty
+  attr_reader :difficulty, :printer, :checker
 
   def initialize(difficulty)
     @difficulty = difficulty
@@ -16,49 +16,45 @@ class Game
     generator = SequenceGenerator.new(difficulty)
     generator.generate_sequence
     @solution = generator.solution_sequence
-    @printer.initiate_game(difficulty)
+    printer.initiate_game(difficulty)
     play_loop
   end
 
   def play_loop
     @checker = GuessChecker.new(@solution)
-    @printer.start_guessing
+    printer.start_guessing
     @start_time = Time.now
     until exit? || win?
       @guess = gets.strip.upcase
       case
       when win?
-        @printer.you_win
-        @end_time = Time.now
-        @printer.time_taken(@start_time, @end_time)
+        printer.you_win
+        end_time = Time.now
+        printer.time_taken(@start_time, end_time)
       when exit?
-        @printer.quit
+        printer.quit
+        exit
       when wrong_length?
-        @printer.invalid_input
+        printer.invalid_input
       when right_length?
-        @checker.check_guess(@guess)
-        @printer.guess_feedback( @guess, @checker.correct_elements, @checker.correct_position)
-        @checker.reset
+        checker.check_guess(@guess)
+        printer.guess_feedback(@guess, checker.correct_elements, checker.correct_position)
+        checker.reset
       end
     end
   end
 
 
-  def quit?
-    @command == "q" || @command == "quit"
-  end
-
-
   def beginner?
-    @difficulty == "beginner"
+    difficulty == "beginner"
   end
 
   def intermediate?
-    @difficulty == "intermediate"
+    difficulty == "intermediate"
   end
 
   def advanced?
-    @difficulty == "advanced"
+    difficulty == "advanced"
   end
 
   def wrong_length?
@@ -74,6 +70,6 @@ class Game
   end
 
   def exit?
-    @guess == "q" || @guess == "quit"
+    @guess == "Q" || @guess == "QUIT"
   end
 end
