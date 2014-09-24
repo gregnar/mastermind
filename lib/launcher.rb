@@ -1,3 +1,6 @@
 require_relative 'mastermind'
 MasterMind.new.start
-MasterMind.new.play_again
+
+loop do
+  MasterMind.new.play_again
+end

@@ -11,6 +11,7 @@ class MasterMind
 
   def start
     printer.welcome_message
+    @command = ""
     until exit? || play?
       @command = gets.strip
       case
@@ -31,6 +32,7 @@ class MasterMind
 
   def set_difficulty
     printer.ask_difficulty
+    @command = "" #resets @command in case of replay
     until exit?
       @command = gets.strip
       case
@@ -53,11 +55,12 @@ class MasterMind
 
   def play_again
     printer.play_again
-    until exit?
+    loop do
       @command = gets.strip
       case
       when exit?
         printer.quit
+        exit
       when play?
         start
         break

@@ -11,36 +11,25 @@ class Printer
   end
 
   def instructions
-    puts "THESE ARE THE INSTRUCTIONS."
-    puts "Enter another command."
+    instructions = Rainbow("\nINSTRUCTIONS:\n").cyan.bright +
+                 "Guess the hidden sequence of colors by entering the first letter of each color.\n" +
+                 "Entering 'bryg' will test for sequence Blue-Red-Yellow-Green.\n" +
+                 "When you guess the sequence, you win!"
+
+    puts instructions
+    puts Rainbow("Enter another command.\n").green.bright
   end
 
   def ask_difficulty
     puts Rainbow("Select difficulty level: (b)eginner, (i)ntermediate or (a)dvanced.").cyan.bright
   end
 
-  def initiate_game(difficulty)
-    @colors = ["(r)ed", "(g)reen", "(b)lue", "(y)ellow"]
-    @elements = ""
-    case difficulty
-    when "beginner"
-      elements = "four"
-    when "intermediate"
-      elements = "six"
-      colors << "(w)hite"
-    when "advanced"
-      elements = "eight"
-      colors << "(w)hite"
-      colors << "(p)urple"
-    end
-    initiate_message(difficulty, elements, colors)
-  end
 
   def initiate_message(diff, elems, cols)
-    @message =  "I have generated a secret #{diff} sequence with #{elems} elements made up of:\n" +
+    @message =  "\nI have generated a secret #{diff} sequence with #{elems} elements made up of:\n" +
           "#{cols.join(" - ")}.\n" +
           "Use (q)uit at any time to end the game."
-    puts message
+    puts Rainbow(message).blue.bright
   end
 
   def start_guessing
@@ -70,8 +59,12 @@ class Printer
     puts "Time elapsed: #{minutes} minutes and #{seconds} seconds."
   end
 
+  def turns_taken(turns)
+    puts "Number of turns: #{turns.to_s}"
+  end
+
   def play_again
-      puts "Would you like to (p)lay again, or (q)uit?"
+      puts Rainbow("Would you like to (p)lay again, or (q)uit?").green.bright
   end
 
   def quit
