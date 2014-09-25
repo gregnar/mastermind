@@ -1,4 +1,4 @@
-require_relative 'CLI'
+require './lib/CLI'
 CLI.new.start
 
 loop do
