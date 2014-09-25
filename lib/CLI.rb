@@ -4,6 +4,7 @@ require_relative 'game'
 class CLI
 
   attr_reader :printer, :command, :stdin
+  attr_writer :command
 
   def initialize(stdin=$stdin, stdout=$stdout)
     @printer = Printer.new(stdout)
@@ -14,7 +15,7 @@ class CLI
     printer.welcome_message
     @command = ""
     until exit? || play?
-      @command = stdin.gets.strip
+      gets_command
       case
       when play?
         set_difficulty
@@ -35,7 +36,7 @@ class CLI
     printer.ask_difficulty
     @command = "" #resets @command in case of replay
     until exit?
-      @command = stdin.gets.strip
+      gets_command
       case
       when beginner?
         Game.new("beginner").play
@@ -57,7 +58,7 @@ class CLI
   def play_again
     printer.play_again
     loop do
-      @command = stdin.gets.strip
+      gets_command
       case
       when exit?
         printer.quit
@@ -69,6 +70,10 @@ class CLI
         printer.invalid_input
       end
     end
+  end
+
+  def gets_command
+    @command = stdin.gets.strip
   end
 
   def beginner?
