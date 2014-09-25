@@ -5,7 +5,8 @@ require 'pry'
 
 class Game
 
-  attr_reader :difficulty, :printer, :checker, :stdin
+  attr_reader :difficulty, :printer, :checker, :stdin, :guess
+  attr_reader :colors, :elements #for testing
 
   def initialize(difficulty, stdin=$stdin, stdout=$stdout)
     @difficulty = difficulty
@@ -25,14 +26,14 @@ class Game
   def set_up_difficulty_message(difficulty)
     @colors = ["(r)ed", "(g)reen", "(b)lue", "(y)ellow"]
     @elements = ""
-    case difficulty
-    when "beginner"
+    case
+    when beginner?
       @elements = "four"
-    when "intermediate"
+    when intermediate?
       @elements = "six"
       @colors << "(w)hite"
-    when "advanced"
-      elements = "eight"
+    when advanced?
+      @elements = "eight"
       @colors << "(w)hite"
       @colors << "(p)urple"
     end
@@ -44,7 +45,7 @@ class Game
     printer.start_guessing
     @start_time = Time.now
     until exit? || win?
-      @guess = stdin.gets.strip.upcase
+      get_guess
       case
       when win?
         printer.you_win
@@ -63,6 +64,10 @@ class Game
         add_turn
       end
     end
+  end
+
+  def get_guess
+    @guess = stdin.gets.strip.upcase
   end
 
   def turns
