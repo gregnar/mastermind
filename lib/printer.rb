@@ -4,7 +4,7 @@ require_relative 'color_sequences'
 class Printer
   attr_reader :stream, :elements, :colors, :message
 
-  def initialize(stdout)
+  def initialize(stdout=$stdout)
     @stream = stdout
   end
 
@@ -31,12 +31,12 @@ class Printer
   def initiate_message(diff, elems, cols)
     @message =  "\nI have generated a secret #{diff} sequence with #{elems} elements made up of:\n" +
           "#{cols.join(" - ")}.\n" +
-          "Use (q)uit at any time to end the game."
+          "Use (q)uit at any time to end the game.\n"
     stream.puts Rainbow(message).blue.bright
   end
 
   def start_guessing
-    stream.puts Rainbow("Start guessing").green.bright
+    stream.puts Rainbow("++Start guessing++").green.bright
   end
 
   def invalid_input
