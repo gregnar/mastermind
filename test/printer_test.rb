@@ -1,5 +1,6 @@
 require_relative 'test_helper'
 require '../lib/printer'
+require '../lib/color_sequences'
 require 'stringio'
 
 class PrinterTest < Minitest::Test
@@ -15,6 +16,7 @@ class PrinterTest < Minitest::Test
     tester = StringIO.new
     printer = Printer.new(tester)
     printer.instructions
+    #tester.string
     assert tester.string.include?("hidden sequence")
   end
 
@@ -38,4 +40,30 @@ class PrinterTest < Minitest::Test
     assert tester.string.include?("six")
     assert tester.string.include?("yellow")
   end
+
+  def test_guess_feedback_can_take_multiple_arguments
+    tester = StringIO.new
+    printer = Printer.new(tester)
+    printer.guess_feedback("RY", 3, 2)
+    assert tester.string.include?("Y")
+    assert tester.string.include?("3")
+    assert tester.string.include?("2")
+
+    printer.guess_feedback("B", 6, 10)
+    assert tester.string.include?("B")
+    assert tester.string.include?("6")
+    assert tester.string.include?("10")
+  end
+
+  def test_turns_taken
+    tester = StringIO.new
+    printer = Printer.new(tester)
+    printer.turns_taken(6)
+    assert_equal "Number of turns: 6", tester.string.chomp
+    tester.string = ""
+    printer.turns_taken(100)
+    assert_equal "Number of turns: 100", tester.string.chomp
+  end
+
+
 end

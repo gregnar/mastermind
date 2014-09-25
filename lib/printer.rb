@@ -67,7 +67,7 @@ class Printer
   end
 
   def play_again
-      stream.puts Rainbow("Would you like to (p)lay again, or (q)uit?").green.bright
+    stream.puts Rainbow("Would you like to (p)lay again, or (q)uit?").green.bright
   end
 
   def quit
