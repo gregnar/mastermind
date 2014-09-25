@@ -24,13 +24,18 @@ class GuessChecker
   def find_correct_elements(guess_sequence)
     duplicate_solution = @solution_array.dup
 
-    guess_sequence.each do |color|
-      if duplicate_solution.include?(color)
-        @correct_elements_counter += 1
-        duplicate_solution.delete_at(duplicate_solution.index(color))
-      end
+    num_count = guess_sequence.count do |color|
+      next unless index = duplicate_solution.index(color)
+      duplicate_solution.delete_at(index)
     end
-    correct_elements_counter
+    num_count
+    # guess_sequence.each do |color|
+    #   if duplicate_solution.include?(color)
+    #     @correct_elements_counter += 1
+    #     duplicate_solution.delete_at(duplicate_solution.index(color))
+    #   end
+    # end
+    # correct_elements_counter
   end
 
 

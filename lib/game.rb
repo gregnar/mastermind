@@ -5,11 +5,12 @@ require 'pry'
 
 class Game
 
-  attr_reader :difficulty, :printer, :checker
+  attr_reader :difficulty, :printer, :checker, :stdin
 
-  def initialize(difficulty)
+  def initialize(difficulty, stdin=$stdin, stdout=$stdout)
     @difficulty = difficulty
-    @printer = Printer.new
+    @stdin = stdin
+    @printer = Printer.new(stdout)
     @turns = 1
   end
 
@@ -43,7 +44,7 @@ class Game
     printer.start_guessing
     @start_time = Time.now
     until exit? || win?
-      @guess = gets.strip.upcase
+      @guess = stdin.gets.strip.upcase
       case
       when win?
         printer.you_win
