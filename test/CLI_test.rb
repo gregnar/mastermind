@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CLITest::Minitest
+class CLITest < Minitest::Test
 
 
 end
