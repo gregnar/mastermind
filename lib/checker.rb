@@ -29,13 +29,6 @@ class GuessChecker
       duplicate_solution.delete_at(index)
     end
     num_count
-    # guess_sequence.each do |color|
-    #   if duplicate_solution.include?(color)
-    #     @correct_elements_counter += 1
-    #     duplicate_solution.delete_at(duplicate_solution.index(color))
-    #   end
-    # end
-    # correct_elements_counter
   end
 
 
